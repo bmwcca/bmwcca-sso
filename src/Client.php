@@ -61,7 +61,7 @@ XML;
 XML;
 
         $result = $this->doRequest('/CENSSAWEBSVCLIB.GET_CUST_INFO_XML', $xmlBody);
-        if ($result['error']) {
+        if (isset($result['error'])) {
             throw new \RuntimeException($result['error']);
         }
         if ($result) {
