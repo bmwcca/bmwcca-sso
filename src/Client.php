@@ -89,20 +89,26 @@ XML;
                 $data['memberships'][$membershipData['group_id']] = $membershipData;
             }
 
-            foreach ($result['committeePositions']['committeePosition'] as $committeePosition) {
-                $committeeData = [
-                    'group_id' => $committeePosition['subgroupId'],
-                    'group_name' => $committeePosition['subgroupName'],
-                    'committee_type' => $committeePosition['committeeType'],
-                    'committee_group_description' => $committeePosition['committeeGrpDescr'],
-                    'committee_description' => $committeePosition['committeeDescr'],
-                    'start_date' => $committeePosition['startDate'],
-                    'position_type' => $committeePosition['positionCode'],
-                    'position_description' => $committeePosition['positionDescr']
-                ];
-                $data['committees'][] = $committeeData;
+            $data["committees"] = [];
+            if (isset($result['committeePositions']['committeePosition'])) {
+                $committeePositionList = $result['committeePositions']['committeePosition'];
+                if (!isset($committeePositionList[0])) {
+                    $committeePositionList = [$committeePositionList];
+                }
+                foreach ($committeePositionList as $committeePosition) {
+                    $committeeData = [
+                        'group_id' => $committeePosition['subgroupId'],
+                        'group_name' => $committeePosition['subgroupName'],
+                        'committee_type' => $committeePosition['committeeType'],
+                        'committee_group_description' => $committeePosition['committeeGrpDescr'],
+                        'committee_description' => $committeePosition['committeeDescr'],
+                        'start_date' => $committeePosition['startDate'],
+                        'position_type' => $committeePosition['positionCode'],
+                        'position_description' => $committeePosition['positionDescr']
+                    ];
+                    $data['committees'][] = $committeeData;
+                }
             }
-
             return $data;
         }
         return [];
