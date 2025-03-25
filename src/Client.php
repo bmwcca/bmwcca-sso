@@ -77,6 +77,7 @@ XML;
                 $memberType = 'ASSOCIATE';
             }
             $data['member_type'] = $memberType;
+            $data['membership_type'] = $result['memberships']['membership'][0]['classSubclassDescr'];
 
             foreach ($result['memberships']['membership'] as $membership) {
                 $membershipData = [
